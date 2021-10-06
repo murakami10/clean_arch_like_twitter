@@ -1,6 +1,7 @@
 package infra
 
 import (
+	"clean_arch/interfaces/database"
 	"database/sql"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -21,8 +22,8 @@ func NewSqlHandler() *SqlHandler {
 	return SqlHandler
 }
 
-func (h *SqlHandler) Execute(s string, args ...interface{}) (*SqlResult, error) {
-	res := &SqlResult{}
+func (h *SqlHandler) Execute(s string, args ...interface{}) (database.Result, error) {
+	res := SqlResult{}
 	result, err := h.Execute(s, args)
 	if err != nil {
 		return res, err
@@ -32,7 +33,7 @@ func (h *SqlHandler) Execute(s string, args ...interface{}) (*SqlResult, error) 
 	return res, nil
 }
 
-func (h *SqlHandler) Query(s string, args ...interface{}) (*SqlRow, error) {
+func (h *SqlHandler) Query(s string, args ...interface{}) (database.Row, error) {
 	rows, err := h.Conn.Query(s, args)
 	if err != nil {
 		return new(SqlRow), err
