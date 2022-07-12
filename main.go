@@ -2,10 +2,21 @@ package main
 
 import (
 	"clean_arch/infra"
-	"fmt"
+
+	"github.com/labstack/echo"
 )
 
-func main(){
-	infra.NewSqlHandler()
-	fmt.Println("aaa")
+func main() {
+	sqlHandler := infra.NewSqlHandler()
+
+	//defer func() {
+	//	err := sqlHandler.Close()
+	//	if err != nil {
+	//		log.Fatal(err)
+	//	}
+	//}()
+
+	e := echo.New()
+	infra.NewUserHandler(e, sqlHandler)
+	e.Logger.Fatal(e.Start(":8080"))
 }

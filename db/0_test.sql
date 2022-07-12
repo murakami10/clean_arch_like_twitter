@@ -7,3 +7,7 @@ CREATE TABLE `users`(
     `avatar_url` TEXT,
     PRIMARY KEY(`id`)
 );
+
+INSERT INTO `users` (`first_name`, `last_name`, `avatar_url`) VALUES ('kyoya', 'murakami', 'example.com');
+INSERT INTO `users` (`first_name`, `last_name`, `avatar_url`) VALUES ('hayato', 'kagiyama', 'example.com');
+INSERT INTO `users` (`first_name`, `last_name`, `avatar_url`) VALUES ('shoki', 'shirasugi', 'example.com');

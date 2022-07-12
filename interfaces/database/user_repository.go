@@ -1,12 +1,15 @@
 package database
 
-import "clean_arch/domain"
+import (
+	"clean_arch/domain"
+	"fmt"
+)
 
 type UserRepository struct {
 	SqlHandler
 }
 
-func (r *UserRepository) Store(u domain.User) (int, error) {
+func (r *UserRepository) Store(u domain.User) (uint, error) {
 	result, err := r.Execute(
 		"INSERT INTO `users` (`first_name`, `last_name`, `avatar_url`) VALUES (?, ?)", u.FirstName, u.LastName, u.AvatarURL,
 	)
@@ -18,7 +21,7 @@ func (r *UserRepository) Store(u domain.User) (int, error) {
 		return 0, err
 	}
 
-	return int(id), nil
+	return uint(id), nil
 }
 
 func (r *UserRepository) FindById(id uint) (*domain.User, error) {
@@ -47,6 +50,7 @@ func (r *UserRepository) FindAll() (*domain.Users, error) {
 	rows, err := r.Query("SELECT `id`, `first_name`, `last_name`, `avatar_url` FROM `users")
 	defer rows.Close()
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 

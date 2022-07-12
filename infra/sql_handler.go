@@ -22,9 +22,17 @@ func NewSqlHandler() *SqlHandler {
 	return SqlHandler
 }
 
+func (h *SqlHandler) Close() error {
+	err := h.Conn.Close()
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (h *SqlHandler) Execute(s string, args ...interface{}) (database.Result, error) {
 	res := SqlResult{}
-	result, err := h.Execute(s, args)
+	result, err := h.Conn.Exec(s, args)
 	if err != nil {
 		return res, err
 	}
